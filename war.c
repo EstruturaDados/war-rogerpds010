@@ -1,3 +1,19 @@
+#include <stdio.h>   // Biblioteca para entrada e saída de dados
+#include <string.h>  // Biblioteca usada para manipular strings (ex: strcspn)
+
+// Definição da constante que representa o número de territórios
+#define QTD_TERRITORIOS 5
+
+// ---------------------------------------------------------------------
+// Estrutura (struct) que representa um território do jogo
+// Contém: nome, cor do exército e quantidade de tropas
+// ---------------------------------------------------------------------
+struct Territorio {
+    char nome[30];
+    char cor[10];
+    int tropas;
+};
+
 // ============================================================================
 //         PROJETO WAR ESTRUTURADO - DESAFIO DE CÓDIGO
 // ============================================================================
@@ -32,6 +48,57 @@
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
 int main() {
+        struct Territorio territorios[QTD_TERRITORIOS]; // Vetor de 5 territórios
+    int i; // variável auxiliar para o laço
+
+    printf("=====================================\n");
+    printf("SISTEMA DE CADASTRO DE TERRITÓRIOS\n");
+    printf("=====================================\n\n");
+
+    // -----------------------------------------------------------
+    // Entrada de dados: cadastro dos 5 territórios
+    // -----------------------------------------------------------
+    for (i = 0; i < QTD_TERRITORIOS; i++) {
+        printf(">>> Cadastro do Território %d <<<\n", i + 1);
+
+        // Lê o nome do território
+        printf("Digite o nome do território: ");
+        fgets(territorios[i].nome, sizeof(territorios[i].nome), stdin);
+        territorios[i].nome[strcspn(territorios[i].nome, "\n")] = '\0'; // remove o \n
+
+        // Lê a cor do exército
+        printf("Digite a cor do exército: ");
+        fgets(territorios[i].cor, sizeof(territorios[i].cor), stdin);
+        territorios[i].cor[strcspn(territorios[i].cor, "\n")] = '\0'; // remove o \n
+
+        // Lê a quantidade de tropas
+        printf("Digite a quantidade de tropas: ");
+        scanf("%d", &territorios[i].tropas);
+
+        // Limpa o buffer de entrada para evitar problemas com o próximo fgets
+        while (getchar() != '\n');
+
+        printf("\n"); // linha em branco para separar os cadastros
+    }
+
+    // -----------------------------------------------------------
+    // Saída de dados: exibição das informações dos territórios
+    // -----------------------------------------------------------
+    printf("\n=====================================\n");
+    printf("     DADOS DOS TERRITÓRIOS CADASTRADOS\n");
+    printf("=====================================\n");
+
+    for (i = 0; i < QTD_TERRITORIOS; i++) {
+        printf("\nTerritório %d\n", i + 1);
+        printf("Nome: %s\n", territorios[i].nome);
+        printf("Cor do exército: %s\n", territorios[i].cor);
+        printf("Quantidade de tropas: %d\n", territorios[i].tropas);
+    }
+
+    printf("\n=====================================\n");
+    printf("Cadastro concluído com sucesso!\n");
+    printf("=====================================\n");
+
     // 1. Configuração Inicial (Setup):
     // - Define o locale para português.
     // - Inicializa a semente para geração de números aleatórios com base no tempo atual.
